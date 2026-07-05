@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آسف يا حياتي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-night: #241934;
+    --ink-night-2: #2f2044;
+    --plum: #6b4c6e;
+    --rose: #e85d75;
+    --rose-deep: #c93f57;
+    --gold: #e8b84b;
+    --cream: #f7ecdd;
+    --cream-dim: #d9c9b8;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+  }
+
+  body{
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 20% 15%, rgba(232,93,117,0.18), transparent 55%),
+      radial-gradient(ellipse at 80% 85%, rgba(232,184,75,0.12), transparent 55%),
+      linear-gradient(180deg, var(--ink-night) 0%, var(--ink-night-2) 55%, #1a1226 100%);
+    font-family: 'Tajawal', sans-serif;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 24px;
+  }
+
+  /* stars */
+  .stars{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .star{
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--cream);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle 3.5s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%, 100%{ opacity: 0.15; }
+    50%{ opacity: 0.85; }
+  }
+
+  /* floating hearts */
+  .heart{
+    position: fixed;
+    bottom: -40px;
+    font-size: 18px;
+    color: var(--rose);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+    animation: rise linear infinite;
+    filter: drop-shadow(0 0 6px rgba(232,93,117,0.35));
+  }
+  @keyframes rise{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10%{ opacity: 0.6; }
+    100%{ transform: translateY(-110vh) translateX(var(--drift, 20px)) rotate(25deg); opacity: 0; }
+  }
+
+  .letter{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 560px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(232,184,75,0.25);
+    border-radius: 18px;
+    padding: 48px 36px 42px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+
+  .eyebrow{
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.9;
+  }
+
+  h1{
+    font-family: 'Aref Ruqaa', serif;
+    font-weight: 700;
+    font-size: clamp(30px, 6vw, 44px);
+    line-height: 1.5;
+    margin: 0 0 18px;
+    color: var(--cream);
+    text-shadow: 0 2px 20px rgba(232,93,117,0.25);
+  }
+
+  .sub{
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--cream-dim);
+    margin: 0 0 38px;
+    font-weight: 300;
+  }
+
+  .stage{
+    position: relative;
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
+  button{
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 34px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-good{
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    color: #fff;
+    box-shadow: 0 10px 30px -8px rgba(232,93,117,0.6);
+  }
+  .btn-good:hover{
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 14px 36px -8px rgba(232,93,117,0.75);
+  }
+  .btn-good:active{
+    transform: translateY(0) scale(0.98);
+  }
+
+  .btn-runaway{
+    background: transparent;
+    color: var(--cream-dim);
+    border: 1.5px solid rgba(217,201,184,0.4);
+    position: relative;
+    z-index: 2;
+  }
+  .btn-runaway.fixed-pos{
+    position: fixed;
+  }
+
+  .msg{
+    margin-top: 30px;
+    min-height: 30px;
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: 500;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .msg.show{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .final{
+    display: none;
+  }
+  .final.show{
+    display: block;
+    animation: pop 0.5s ease;
+  }
+  @keyframes pop{
+    0%{ transform: scale(0.85); opacity: 0; }
+    100%{ transform: scale(1); opacity: 1; }
+  }
+
+  .final img{
+    max-width: 100%;
+    border-radius: 14px;
+    margin-top: 20px;
+    border: 1px solid rgba(232,184,75,0.3);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .heart, .star{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="letter">
+  <div class="eyebrow">رسالة صغيرة</div>
+  <h1>أنا عارف إني غلطت<br>وقلبي مش هيرتاح غير برضاكِ</h1>
+  <p class="sub">مش هطول عليكِ، بس عايز أعرف... لسه زعلانة مني؟</p>
+
+  <div class="stage">
+    <button class="btn-good" id="goodBtn">متزعليش 🌷</button>
+    <button class="btn-runaway" id="runBtn">زعلانة 😠</button>
+  </div>
+
+  <p class="msg" id="msg"></p>
+</div>
+
+<script>
+  // stars
+  const starsWrap = document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.top = Math.random()*100 + 'vh';
+    s.style.animationDelay = (Math.random()*3.5) + 's';
+    starsWrap.appendChild(s);
+  }
+
+  // floating hearts
+  function spawnHeart(){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = ['💗','💛','🌷','✨'][Math.floor(Math.random()*4)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.setProperty('--drift', (Math.random()*60-30) + 'px');
+    h.style.animationDuration = (6 + Math.random()*5) + 's';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(), 12000);
+  }
+  setInterval(spawnHeart, 900);
+
+  // good button
+  const goodBtn = document.getElementById('goodBtn');
+  const msg = document.getElementById('msg');
+  goodBtn.addEventListener('click', () => {
+    msg.textContent = 'الحمد لله... قلبي رجعله نبضه 💗 استني بس هوريكِ حاجة...';
+    msg.classList.add('show');
+    goodBtn.disabled = true;
+    setTimeout(() => {
+      window.location.href = 'gallery.html';
+    }, 1400);
+  });
+
+  // runaway button
+  const runBtn = document.getElementById('runBtn');
+
+  function moveButtonAwayFrom(x, y){
+    const btnRect = runBtn.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = 20;
+    const maxX = vw - btnRect.width - margin;
+    const maxY = vh - btnRect.height - margin;
+
+    let newX, newY, tries = 0;
+    do{
+      newX = margin + Math.random() * Math.max(1, maxX - margin);
+      newY = margin + Math.random() * Math.max(1, maxY - margin);
+      tries++;
+    } while(
+      Math.hypot((newX - x), (newY - y)) < 180 && tries < 12
+    );
+
+    runBtn.classList.add('fixed-pos');
+    runBtn.style.left = newX + 'px';
+    runBtn.style.top = newY + 'px';
+  }
+
+  // desktop: run away on hover
+  runBtn.addEventListener('mouseenter', (e) => {
+    moveButtonAwayFrom(e.clientX, e.clientY);
+  });
+
+  // touch / click fallback: never let it register a real click action
+  runBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const t = e.touches[0];
+    moveButtonAwayFrom(t.clientX, t.clientY);
+  }, {passive:false});
+
+  runBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    // if it somehow gets clicked (keyboard/tap), just dodge again, do nothing else
+    moveButtonAwayFrom(e.clientX, e.clientY);
+  });
+
+  // place it once on load in a natural spot near the good button initially (not fixed yet)
+</script>
+</body>
+</html>
